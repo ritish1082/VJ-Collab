@@ -23,6 +23,7 @@ import {
   getDoc,
 } from "firebase/firestore";
 import { db } from "./Firebase";
+import CommentsPage from "./components/CommentsPage";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -134,6 +135,7 @@ function App() {
           <Route path="/collab" element={<Collab />} />
           <Route path="/forum" element={<Forum />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/commentspage" element={<CommentsPage />} />
         </Routes>
       </UserContext.Provider>
     </div>
