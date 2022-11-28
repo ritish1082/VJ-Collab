@@ -6,22 +6,41 @@ import raiseHand from "../images/raise-hand.png";
 import Table from "react-bootstrap/Table";
 import UserContext from "../UserContext";
 import toast from "react-hot-toast";
-
-const CollabSkillsModal = (props) => {
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import { db } from "../Firebase";
+const CollabSkillsModal = ({ set, cid }) => {
+  const rating = [1, 2, 3, 4, 5];
   const { user } = useContext(UserContext);
+  const uid = user?.uid;
   let [show, setShow] = useState(false);
   const handleNotSignedIn = () => {
     toast.error("Not Loged In !");
   };
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const handleSubmit = () => {
-    toast.success("Request Sent!")
-    // var e = document.getElementById("skillSet");
-    // var value = e.value;
-    // var text = e.options[e.selectedIndex].text;
+  const [skillRating, setSkillRating] = useState({});
+  const handleClose = () => {
+    setShow(false);
+    console.log(cid);
   };
-  const rating = [1, 2, 3, 4, 5];
+  const handleShow = () => setShow(true);
+  const handleRating = (skill) => {
+    skillRating[skill] = document.getElementById(skill).value;
+    setSkillRating(skillRating);
+  };
+  const handleSubmit = async (id) => {
+    console.log(skillRating);
+    const docSnap = await getDoc(doc(db, "collab", id, "requests", uid));
+    if (docSnap.exists()) {
+      toast.error("Already Applied!");
+    } else {
+      setDoc(doc(db, "collab", id, "requests", uid), {
+        uid: uid,
+        rating: skillRating,
+        timestamp: serverTimestamp(),
+      });
+      toast.success("Request Sent");
+    }
+    handleClose();
+  };
 
   return (
     <div>
@@ -64,11 +83,11 @@ const CollabSkillsModal = (props) => {
               </tr>
             </thead>
             <tbody>
-              {props.skills.map((skill, key) => (
+              {set?.map((skill, key) => (
                 <tr key={key}>
                   <td>{skill}</td>
                   <td>
-                    <select id="skillSet">
+                    <select id={skill} onChange={() => handleRating(skill)}>
                       <option value={0}>0</option>
                       {rating.map((rate, key) => (
                         <option name={skill} key={key} value={key + 1}>
@@ -93,7 +112,7 @@ const CollabSkillsModal = (props) => {
             description="Submit"
             textColor="white"
             bgColor="green"
-            onClick={handleSubmit}
+            onClick={() => handleSubmit(cid)}
           />
         </Modal.Footer>
       </Modal>

@@ -18,7 +18,7 @@ function Collab() {
   return (
     <div>
       <CollabPostCard />
-      <Row xs={1} md={3} className="g-4 m-3">
+      <Row xs={1} md={3} className="g-4 mt-3">
         {posts.map((post) => (
           <Col className="mx-auto">
             <CollabFeedCard {...post} />

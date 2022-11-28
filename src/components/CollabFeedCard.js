@@ -1,29 +1,31 @@
-import {React,useEffect,useState} from "react";
+import { React, useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import userIcon from "../images/user-icon.png";
 import teamIcon from "../images/team-icon.png";
-import { ListGroup, ListGroupItem,Badge } from "react-bootstrap";
+import { ListGroup, ListGroupItem, Badge } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 import CollabSkillsModal from "./CollabSkillsModal";
-import { getDoc,doc } from "firebase/firestore";
-import {db} from "../Firebase"
+import { getDoc, doc } from "firebase/firestore";
+import { db } from "../Firebase";
 const CollabFeedCard = (props) => {
-  const [name,setName]= useState(" ")
-  const getUser = async ()=>{
-    try{
-      const ref = doc(db,"users",props?.uid);
-      const docSnap=await getDoc(ref);
-      setName(docSnap.data()?.name)
-    }catch(err){console.log(err)}
-  }
+  const [name, setName] = useState(" ");
+  const getUser = async () => {
+    try {
+      const ref = doc(db, "users", props?.uid);
+      const docSnap = await getDoc(ref);
+      setName(docSnap.data()?.name);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  useEffect (()=>{
+  useEffect(() => {
     getUser();
-  },[])
+  }, [props]);
 
   return (
     <div className="m-1">
-      <Card className="shadow">
+      <Card className="shadow w-75 mx-auto collabcard">
         <Card.Header className="">
           <Card.Img
             className="img-fluid"
@@ -33,7 +35,6 @@ const CollabFeedCard = (props) => {
           />
           <div className="float-start">
             <h6 className="ms-2 mt-2">{name}</h6>
-            {/* <p className="m-0">@{props.username}</p> */}
           </div>
         </Card.Header>
         <Card.Body className="p-0 mt-1">
@@ -85,7 +86,7 @@ const CollabFeedCard = (props) => {
           </div>
         </Card.Body>
         <Card.Footer className="mt-1">
-          <CollabSkillsModal skills={props.skills} />
+          <CollabSkillsModal set={props.skills} cid={props.id} />
         </Card.Footer>
       </Card>
     </div>

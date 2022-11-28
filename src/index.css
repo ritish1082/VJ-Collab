@@ -18,6 +18,21 @@ code {
   position: relative;
 }
 
-.forum-card:hover{
+/* .forum-card:hover{
   transform: scale(1.05, 1.05);
+} */
+.collabcard:hover{
+  outline-style: solid;
+  outline-color: ghostwhite;
+}
+
+.profilepic{
+  border-radius: 50%;
+
+}
+.x{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }

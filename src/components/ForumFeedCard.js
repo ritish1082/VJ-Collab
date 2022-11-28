@@ -1,29 +1,59 @@
-import React from 'react';
-import Button from 'react-bootstrap/Button';
-import { Link } from 'react-router-dom';
+import { React, useEffect, useState } from "react";
+import { Button, Badge } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { getDoc, doc } from "firebase/firestore";
+import { db } from "../Firebase";
+import moment from "moment";
+const ForumFeedCard = (props) => {
+  const [name, setName] = useState(" ");
+  const [email, setEmail] = useState(" ");
+  let desc = props?.desc?.slice(0, 30).concat(" . . .");
+  const getUser = async () => {
+    try {
+      const ref = doc(db, "users", props?.uid);
+      const docSnap = await getDoc(ref);
+      setName(docSnap.data()?.name);
+      setEmail(docSnap.data()?.email);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-const ForumFeedCardDiv = (props) => {
-    return (
-        <div>
-            <div className='forum-card m-5 border shadow rounded p-2 mx-auto' style={{ width: "75vw" }}>
-                <div className='header h-25 ms-2'>
-                    <p className='m-0'><b>{props.name}</b></p>
-                    <p>@{props.username}</p>
-                </div>
-                <hr />
-                <div className='body mt-3 ms-3'>
-                    <h4>{props.title}</h4>
-                </div>
+  useEffect(() => {
+    getUser();
+  }, [props]);
 
-                <div className='button p-3  '>
-                    <Link to="/commentspage">
-                        <Button variant="success">View</Button>
-                    </Link>
-                </div>
-            </div>
+  return (
+    <div>
+      <div
+        className="forum-card m-5 border shadow rounded p-2 mx-auto"
+        style={{ width: "75vw" }}
+      >
+        <div className="mx-3">
+          <div className="d-flex x">
+            <p>
+              <b>{name}</b>
+            </p>
+            <p>{moment(props?.timestamp?.toDate()).startOf("minute").fromNow()}</p>
+          </div>
+          <p>{email}</p>
         </div>
+        <hr />
+        <div className="body ms-3">
+          <h4>{props.query}</h4>
+          <p>{desc}</p>
+        </div>
+        <div className="x mx-3">
+          <Badge className="mt-3 p-2">{props.domain}</Badge>
+          <div>
+            <Link to={`/forum/${props.id}`}>
+              <Button variant="success">View</Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-    );
-}
-
-export default ForumFeedCardDiv;
+export default ForumFeedCard;

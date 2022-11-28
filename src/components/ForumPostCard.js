@@ -25,10 +25,7 @@ const ForumPostCard = () => {
                 <Modal.Body>
                     <ForumPostForm />
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button className='btn btn-danger' onClick={handleClose}>Discard</Button>
-                    <Button className='btn btn-success ' onClick={handleClose}>Post</Button>
-                </Modal.Footer>
+               
             </Modal>
         </div>
     );

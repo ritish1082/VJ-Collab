@@ -12,16 +12,16 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Collab from "./pages/Collab";
 import Forum from "./pages/Forum";
+import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
+import CollabRequest from "./pages/CollabRequest";
+import ForumReply from "./pages/ForumReply";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import Button from "./subComponents/Button";
 import signInIcon from "./images/google-signin.png";
 import vjCollabIcon from "./images/vjcollab-icon.png";
 import { toast, Toaster } from "react-hot-toast";
-import {
-  doc,
-  getDoc,
-} from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "./Firebase";
 import CommentsPage from "./components/CommentsPage";
 
@@ -36,8 +36,8 @@ function App() {
     if (docSnap.exists()) {
       toast.success("Loged In !");
     } else {
-      toast.success("Welcome! Create Your Profile")
-      navigate('profile')
+      toast.success("Welcome! Create Your Profile");
+      navigate("profile");
     }
   };
 
@@ -45,7 +45,14 @@ function App() {
     signInWithPopup(auth, provider)
       .then((res) => {
         console.log(res);
-        getUser(res?.user?.uid)
+        if (res.user?.email.split("@")[1] === "vnrvjiet.in") {
+          getUser(res?.user?.uid);
+        } else {
+          signOut(auth);
+          setUser(null);
+          toast.error("Login with @vnrvjiet.in");
+          auth.currentUser.delete();
+        }
       })
       .catch((err) => {
         toast.error("Something Went Wrong !");
@@ -70,7 +77,6 @@ function App() {
     toast.success("Loged Out ");
   };
 
-
   return (
     <div>
       <Navbar
@@ -93,7 +99,7 @@ function App() {
           <Navbar.Collapse className="me-5" id="responsive-navbar-nav">
             <Nav className="ms-auto">
               {user && (
-                <Nav.Link href="/profile" className="collab text-white">
+                <Nav.Link href="/dashboard" className="collab text-white">
                   Dashboard
                 </Nav.Link>
               )}
@@ -127,15 +133,18 @@ function App() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Toaster  />
+      <Toaster />
 
       <UserContext.Provider value={{ user, handleSignOut }}>
         <Routes>
           <Route path="" element={<Home />} />
           <Route path="/collab" element={<Collab />} />
           <Route path="/forum" element={<Forum />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/commentspage" element={<CommentsPage />} />
+          <Route path="/collab/:id" element={<CollabRequest />} />
+          <Route path="/forum/:id" element={<ForumReply />} />
         </Routes>
       </UserContext.Provider>
     </div>
