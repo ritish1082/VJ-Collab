@@ -24,6 +24,7 @@ import { toast, Toaster } from "react-hot-toast";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "./Firebase";
 import CommentsPage from "./components/CommentsPage";
+import ForumDashboard from "./components/ForumDashboard";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -74,6 +75,7 @@ function App() {
   const handleSignOut = () => {
     signOut(auth);
     setUser(null);
+    navigate('/')
     toast.success("Loged Out ");
   };
 
@@ -141,6 +143,7 @@ function App() {
           <Route path="/collab" element={<Collab />} />
           <Route path="/forum" element={<Forum />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="forum-dashboard" element={<ForumDashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/commentspage" element={<CommentsPage />} />
           <Route path="/collab/:id" element={<CollabRequest />} />

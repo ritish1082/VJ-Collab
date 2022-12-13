@@ -36,3 +36,9 @@ code {
   justify-content: space-between;
   flex-wrap: wrap;
 }
+
+.action{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

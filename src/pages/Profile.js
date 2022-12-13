@@ -4,7 +4,6 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../Firebase";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { getAdditionalUserInfo } from "firebase/auth";
 function Profile() {
   const [name, setName] = useState("");
   const [lid, setLid] = useState("");
@@ -19,7 +18,7 @@ function Profile() {
       name: name,
       linkedin: lid,
     });
-    toast.success("Profile Created!");
+    toast.success("Profile Saved!");
     navigate("/collab");
   };
 

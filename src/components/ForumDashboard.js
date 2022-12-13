@@ -1,6 +1,7 @@
 import { React, useEffect, useState, useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CollabFeedCard from "../components/CollabFeedCard";
+import ForumFeedCard from "../components/ForumFeedCard";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import UserContext from "../UserContext";
 import { db } from "../Firebase";
@@ -14,8 +15,8 @@ import {
   collection,
 } from "firebase/firestore";
 import { Row, Col } from "react-bootstrap";
-function Dashboard() {
-  const { user } = useContext(UserContext);
+function ForumDashboard() {
+    const { user } = useContext(UserContext);
   const uid = user?.uid;
   const [name, setName] = useState("Loading..");
   const [posts, setPosts] = useState([]);
@@ -36,7 +37,7 @@ function Dashboard() {
 
   useEffect(() => {
    if(user){
-    const q = query(collection(db, "collab"), where("uid", "==", uid));
+    const q = query(collection(db, "forum"),where("uid", "==", uid));
     const unsub = onSnapshot(q, (snapshot) => {
       setPosts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
@@ -90,11 +91,11 @@ function Dashboard() {
             </div>
           </div>
           <div>
-            <Row xs={1} md={3} className="g-4 mt-3">
+            <Row xs={1} md={1} className="g-4 mt-3">
               {posts.map((post) => (
                 <Col className="mx-auto">
-                  <Link to={`/collab/${post.id}`}>
-                    <CollabFeedCard {...post} />
+                  <Link to={`/forum/${post.id}`}>
+                    <ForumFeedCard {...post} />
                   </Link>
                 </Col>
               ))}
@@ -107,4 +108,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default ForumDashboard
