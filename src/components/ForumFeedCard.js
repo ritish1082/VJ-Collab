@@ -7,7 +7,7 @@ import moment from "moment";
 const ForumFeedCard = (props) => {
   const [name, setName] = useState(" ");
   const [email, setEmail] = useState(" ");
-  let desc = props?.desc?.slice(0, 30).concat(" . . .");
+  let desc = props?.desc?.slice(0, 50).concat(" . . .");
   const getUser = async () => {
     try {
       const ref = doc(db, "users", props?.uid);

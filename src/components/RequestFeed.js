@@ -5,7 +5,8 @@ import Button from "../subComponents/Button";
 import { useEffect } from "react";
 import { db } from "../Firebase";
 
-import{doc,getDoc} from "firebase/firestore"
+import{deleteDoc, doc,getDoc, updateDoc} from "firebase/firestore"
+import { toast } from "react-hot-toast";
 function RequestFeed(props) {
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
@@ -20,6 +21,14 @@ function RequestFeed(props) {
       console.log("No such document!");
     }
   };
+  const handleAccept = async () =>{
+      await updateDoc(doc(db,"collab",props.postid,"requests",props.id),{status:1})
+      .then(toast.success("Collaborator accepted"))
+  }
+  const handleReject = async () =>{
+    await deleteDoc(doc(db,"collab",props.postid,"requests",props.id))
+    .then(toast.success("Collaborator Rejected"))
+  }
 
   useEffect(() => {
     getUser();
@@ -35,8 +44,8 @@ function RequestFeed(props) {
         </td>
         <td>
           <InputGroup className="action">
-            <Button bgColor="red" textColor="white" description="-" />
-            <Button bgColor="green" textColor="white" description="+" />
+            <Button bgColor="red" textColor="white" description="-" onClick={handleReject}/>
+            <Button bgColor="green" textColor="white" description="+" onClick={handleAccept}/>
           </InputGroup>
         </td>
       </tr>

@@ -11,6 +11,8 @@ function CollabPostForm() {
   const { user } = useContext(UserContext);
   let [skillSet, setSkillSet] = useState([]);
   let color = ["red", "green", "brown"];
+  let visibility;
+  const [aym,setAym]=useState(false);
   const [loading, isLoading] = useState(false);
   const [name, setName] = useState("");
   const [domain, setDomain] = useState("");
@@ -33,6 +35,7 @@ function CollabPostForm() {
     isLoading(true);
     let [x, y, z] = date.split("-");
     const res = [z, y, x].join("-");
+    aym?visibility=0 :visibility=1
     const docData = {
       name: name,
       uid: user?.uid,
@@ -42,6 +45,7 @@ function CollabPostForm() {
       skills: skillSet,
       date: res,
       time: serverTimestamp(),
+      visibility:visibility
     };
     try {
       await addDoc(collection(db, "collab"), docData);
@@ -177,6 +181,7 @@ function CollabPostForm() {
             onChange={(e) => setDesc(e.target.value)}
           />
         </Form.Group>
+        <Form.Check  type="switch" id="custom-switch" label="Anonymous"  onClick={()=>setAym(!aym)}/>
       </Form>
       <Modal.Footer>
         {loading ? (

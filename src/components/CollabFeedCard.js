@@ -10,12 +10,17 @@ import { db } from "../Firebase";
 const CollabFeedCard = (props) => {
   const [name, setName] = useState(" ");
   const getUser = async () => {
-    try {
-      const ref = doc(db, "users", props?.uid);
-      const docSnap = await getDoc(ref);
-      setName(docSnap.data()?.name);
-    } catch (err) {
-      console.log(err);
+    if(props?.visibility==0){
+      setName("Anonymous")
+    }
+    else{
+      try {
+        const ref = doc(db, "users", props?.uid);
+        const docSnap = await getDoc(ref);
+        setName(docSnap.data()?.name);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
