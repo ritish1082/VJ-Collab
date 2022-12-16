@@ -4,9 +4,10 @@ import { InputGroup } from "react-bootstrap";
 import Button from "../subComponents/Button";
 import { useEffect } from "react";
 import { db } from "../Firebase";
-
+import Table from 'react-bootstrap/Table';
 import{deleteDoc, doc,getDoc, updateDoc} from "firebase/firestore"
 import { toast } from "react-hot-toast";
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 function RequestFeed(props) {
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
@@ -36,19 +37,26 @@ function RequestFeed(props) {
 
   return (
     <>
-      <tr>
-        <td>{name}</td>
-        <td><a href={link}>Linkedin</a></td>
-        <td>
-          <SkillRating {...props.rating} />
-        </td>
-        <td>
-          <InputGroup className="action">
-            <Button bgColor="red" textColor="white" description="-" onClick={handleReject}/>
-            <Button bgColor="green" textColor="white" description="+" onClick={handleAccept}/>
-          </InputGroup>
-        </td>
-      </tr>
+      
+      
+        <tr>
+          <td>{name}</td>
+          <td><a href={link}>Linkedin</a></td>
+          <td><SkillRating {...props.rating} /></td>
+          <td>
+              
+              <ButtonGroup size="sm">
+                <Button bgColor="red" textColor="white" description="-" onClick={handleReject}/>
+                <Button bgColor="green" textColor="white" description="+" onClick={handleAccept}/>
+                
+              </ButtonGroup>
+          </td>
+        </tr>
+        
+      
+    
+
+
     </>
   );
 }

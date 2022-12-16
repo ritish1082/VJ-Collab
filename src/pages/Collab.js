@@ -56,10 +56,10 @@ function Collab() {
 
   return (
     <div>
-      <CollabPostCard />
-      <div>
-      <Dropdown className="float-end m-4 mb-5">
-        <Dropdown.Toggle>Select Domain</Dropdown.Toggle>
+      <CollabPostCard/>
+      <div className="text-center mt-3 ">
+      <Dropdown className=" mt-1 ">
+        <Dropdown.Toggle className="bg-dark mx-auto">Select Domain</Dropdown.Toggle>
         <Dropdown.Menu>
           {domains.map((domain, key) => (
             // <Dropdown.Item key={key}>
@@ -81,10 +81,11 @@ function Collab() {
         </Dropdown.Menu>
       </Dropdown>
       </div>
+      
       <br />
       <br />
       <div>
-      <Row xs={1} md={3} className="g-4 mt-5">
+      <Row xs={1} md={3} className="g-4 mt-1">
         {posts.map((post) => (
           <Col className="mx-auto">
             <CollabFeedCard {...post} />

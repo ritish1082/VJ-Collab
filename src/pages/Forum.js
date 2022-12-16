@@ -16,7 +16,7 @@ const Forum = () => {
 
   return (
     <div className="">
-      <div className="text-center" style={{ marginLeft: "15vw" }}>
+      <div className="text-center" >
         <ForumPostCard />
       </div>
 

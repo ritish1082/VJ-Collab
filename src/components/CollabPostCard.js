@@ -16,35 +16,44 @@ function CollabPostCard() {
     <div>
       <div className="text-center">
         {/* Collab Request */}
-        <h1
-          style={{
-            fontFamily: "shalimar",
-            fontSize: "65px",
-          }}
-          className="d-inline-block text-center"
-        >
-          {" "}
-          <b>Your Feed</b>{" "}
-        </h1>
-        {user ? (
-          <Button
-            className="float-end mt-2"
-            style={{ marginRight: "15px" }}
-            onClick={handleShow}
+        <div>
+          <h1
+            style={{
+              fontFamily: "shalimar",
+              fontSize: "65px",
+            }}
+            className="d-inline-block text-center"
           >
             {" "}
-            + Post Collaboration
-          </Button>
-        ) : (
-          <Button
-            className="float-end mt-2"
-            style={{ marginRight: "15px" }}
-            onClick={handleNotSignedIn}
-          >
-            {" "}
-            + Post Collaboration
-          </Button>
-        )}
+            <b>Your Feed</b>{" "}
+          </h1>
+
+        </div>
+
+        
+          {user ? (
+            <Button
+              className=" bg-dark mt-5"
+              style={{ marginRight: "15px" }}
+              onClick={handleShow}
+            >
+              {" "}
+              + Post Collaboration
+            </Button>
+          ) : (
+            <Button
+              className=" bg-dark mt-5"
+              style={{ marginRight: "15px" }}
+              onClick={handleNotSignedIn}
+            >
+              {" "}
+              + Post Collaboration
+            </Button>
+          )}
+
+        
+        
+        
       </div>
       {/* Modal for collaboration post form */}
       <Modal
@@ -62,7 +71,10 @@ function CollabPostCard() {
           <CollabPostForm />
         </Modal.Body>
       </Modal>
+      
+
     </div>
+
   );
 }
 

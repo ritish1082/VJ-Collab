@@ -13,9 +13,26 @@ const ForumPostCard = () => {
     return (
         <div>
 
-            <div className='text-center' >
+            {/* <div className='text-center' >
                 <h1 className='d-inline-block text-center'>Welcome to Discussion Portal..</h1>
-                <Button className='float-end mt-2' style={{marginRight: "15px"}} onClick={handleShow}> + Ask a Question</Button>
+                
+            </div> */}
+            <div>
+                <h1
+                    style={{
+                    fontFamily: "shalimar",
+                    fontSize: "45px",
+                    }}
+                    className="d-inline-block m-2 text-center"
+                >
+                    {" "}
+                    <b>Welcome to Discussion Portal..</b>{" "}
+                </h1>
+
+            </div>
+            <div className=' '>
+                    ~~~~~<Button className='bg-dark m-2'  onClick={handleShow}> + Ask a Question</Button>~~~~~
+
             </div>
 
             <Modal size="lg" show={show} onHide={handleClose} backdrop="static" scrollable centered>

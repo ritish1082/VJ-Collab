@@ -6,6 +6,9 @@ import { doc,query, onSnapshot, collection, orderBy, deleteDoc,where } from "fir
 import RequestFeed from "../components/RequestFeed";
 import Button from "../subComponents/Button";
 import { toast } from "react-hot-toast";
+import Table from 'react-bootstrap/Table';
+import { Row } from "react-bootstrap";
+import {Col} from "react-bootstrap";
 
 function CollabRequest() {
   const { id } = useParams();
@@ -34,39 +37,53 @@ function CollabRequest() {
   }
 
   return (
-    <div>
-      <h4 className="mx-auto">Collab Request</h4>
-      <div className="mx-2">
-      <Button
-        description="Edit"
-        textColor="white"
-        bgColor="green"
-        onClick={() => handleEdit(id)}
-      />
-      <Button
-        description="Delete"
-        textColor="white"
-        bgColor="red"
-        onClick={() => handleDelete(id)}
-      />
-      </div>
+    <div className="m-4">
+      <h4 className="text-center">Collab Request</h4>
+      <Row className="mx-auto p-3">
+        <Col >
+          <Button size="sm"
+            description="Edit"
+            textColor="white"
+            bgColor="green"
+            onClick={() => handleEdit(id)}
+          />
+          
+
+        </Col>
+        <Col>
+          <Button size="sm"
+            description="Delete"
+            textColor="white"
+            bgColor="red"
+            onClick={() => handleDelete(id)}
+          />
+
+        </Col>
+      </Row>
+      {/* <div className="bg-dark mb-5">
+      
+      
+      </div> */}
 
       {posts.length == 0 ? (
         <h4 className="text-center">No Collaborators yet!</h4>
       ) : (
-        <table className="table mx-auto text-center">
+        <Table responsive="sm" striped className="p-3" >
           <thead>
-            <th>Name</th>
-            <th>Social Skills</th>
-            <th>Skills</th>
-            <th>Action</th>
+            <tr>
+              <th>Name</th>
+              <th>Links</th>
+              <th>Skills</th>
+              <th>Action</th>
+            </tr>
+            
           </thead>
           <tbody>
             {posts.map((post) => (
               <RequestFeed {...post} postid={id} />
             ))}
           </tbody>
-        </table>
+        </Table>
       )}
     </div>
   );

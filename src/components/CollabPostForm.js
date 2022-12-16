@@ -181,7 +181,7 @@ function CollabPostForm() {
             onChange={(e) => setDesc(e.target.value)}
           />
         </Form.Group>
-        <Form.Check  type="switch" id="custom-switch" label="Anonymous"  onClick={()=>setAym(!aym)}/>
+        <Form.Check  type="switch" id="custom-switch" label="Ghost Mode"  onClick={()=>setAym(!aym)}/>
       </Form>
       <Modal.Footer>
         {loading ? (

@@ -26,7 +26,7 @@ const ForumFeedCard = (props) => {
   return (
     <div>
       <div
-        className="forum-card m-5 border shadow rounded p-2 mx-auto"
+        className="forum-card m-2 border shadow rounded p-2 mx-auto"
         style={{ width: "75vw" }}
       >
         <div className="mx-3">
