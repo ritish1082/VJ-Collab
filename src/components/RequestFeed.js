@@ -48,7 +48,6 @@ function RequestFeed(props) {
               <ButtonGroup size="sm">
                 <Button bgColor="red" textColor="white" description="-" onClick={handleReject}/>
                 <Button bgColor="green" textColor="white" description="+" onClick={handleAccept}/>
-                
               </ButtonGroup>
           </td>
         </tr>

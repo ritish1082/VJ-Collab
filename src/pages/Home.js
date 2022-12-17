@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Home.css";
+// import "./Home.css";
 function Home() {
   return (
-    <div className="homee">
+    <div className="">
       <div className=" w-75 mx-auto">
         <div className="">
           <h1
@@ -15,7 +15,7 @@ function Home() {
               
             }}
           >
-            <b className="text-success">Welcome to VJ Collab..</b>
+            <b className="">Welcome to VJ Collab..</b>
           </h1>
 
 

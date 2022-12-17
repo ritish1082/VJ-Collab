@@ -2,19 +2,20 @@ import { React, useContext, useEffect, useState } from "react";
 import { useParams,useNavigate } from "react-router-dom";
 import UserContext from "../UserContext";
 import { db } from "../Firebase";
-import { doc,query, onSnapshot, collection, orderBy, deleteDoc,where } from "firebase/firestore";
+import { doc,query, onSnapshot, collection, orderBy, deleteDoc, getDoc } from "firebase/firestore";
 import RequestFeed from "../components/RequestFeed";
 import Button from "../subComponents/Button";
 import { toast } from "react-hot-toast";
-import Table from 'react-bootstrap/Table';
-import { Row } from "react-bootstrap";
-import {Col} from "react-bootstrap";
+import { Row,Col,Modal,Table } from "react-bootstrap";
+import EditPost from "../components/EditPost";
 
 function CollabRequest() {
   const { id } = useParams();
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
+  const [edit, setEdit] = useState([]);
+  let [show, setShow] = useState(false);
   useEffect(() => {
     const q = query(
       collection(db, "collab", id, "requests"),
@@ -26,8 +27,11 @@ function CollabRequest() {
     return unsub;
   }, []);
 
-  const handleEdit = (id) =>{
-
+  const handleEdit = async (id) =>{
+    const ref=doc(db,"collab",id);
+    const docSnap=await getDoc(ref);
+    setEdit(docSnap.data());
+    setShow(true);
   }
   const handleDelete = async (id) =>{
     await deleteDoc(doc(db,"collab",id))
@@ -35,11 +39,12 @@ function CollabRequest() {
     navigate('/dashboard')
     .catch((err)=>{console.log(err)})
   }
+  const handleClose = () =>{setShow(false)};
 
   return (
     <div className="m-4">
       <h4 className="text-center">Collab Request</h4>
-      <Row className="mx-auto p-3">
+      <Row className="mx-auto">
         <Col >
           <Button size="sm"
             description="Edit"
@@ -60,15 +65,10 @@ function CollabRequest() {
 
         </Col>
       </Row>
-      {/* <div className="bg-dark mb-5">
-      
-      
-      </div> */}
-
       {posts.length == 0 ? (
         <h4 className="text-center">No Collaborators yet!</h4>
       ) : (
-        <Table responsive="sm" striped className="p-3" >
+        <Table responsive="sm" striped className="text-center" >
           <thead>
             <tr>
               <th>Name</th>
@@ -85,6 +85,21 @@ function CollabRequest() {
           </tbody>
         </Table>
       )}
+      <Modal
+        size="lg"
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        scrollable
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Post</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <EditPost {... edit} postid={id}/>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }

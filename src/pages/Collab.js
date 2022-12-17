@@ -80,10 +80,7 @@ function Collab() {
           </InputGroup>
         </Dropdown.Menu>
       </Dropdown>
-      </div>
-      
-      <br />
-      <br />
+      </div><br />
       <div>
       <Row xs={1} md={3} className="g-4 mt-1">
         {posts.map((post) => (
