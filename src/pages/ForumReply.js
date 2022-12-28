@@ -1,4 +1,5 @@
 import React, { useEffect, useState,useContext } from "react";
+import ForumAnswers from "../components/ForumAnswers";
 import ForumFeedCard from "../components/ForumFeedCard";
 import Form from "react-bootstrap/Form";
 import Button from "../subComponents/Button";
@@ -67,11 +68,11 @@ function ForumReply() {
   }, [posts]);
   return (
     <div className="container">
-      <ForumFeedCard {...q} />
+      <ForumAnswers {...q} />
       <hr className="w-100 mx-auto" />
       <br />
       {posts.map((post) => (
-        <ForumFeedCard {...post} />
+        <ForumAnswers {...post} /> 
       ))}
       {/* answer */}
       <h5>Your Answer: </h5>
