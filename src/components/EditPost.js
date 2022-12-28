@@ -5,20 +5,20 @@ import { Form, Row, Col, Button, InputGroup } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import toast from "react-hot-toast";
 import { db } from "../Firebase";
-import { collection, serverTimestamp, addDoc } from "firebase/firestore";
+import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import UserContext from "../UserContext";
-function CollabPostForm() {
+function EditPost(props) {
   const { user } = useContext(UserContext);
-  let [skillSet, setSkillSet] = useState([]);
+  let [skillSet, setSkillSet] = useState(props.skills);
   let color = ["red", "green", "brown"];
   let visibility;
-  const [aym,setAym]=useState(false);
+  const [aym, setAym] = useState(props.visibility);
   const [loading, isLoading] = useState(false);
-  const [name, setName] = useState("");
-  const [domain, setDomain] = useState("");
-  const [persons, setPersons] = useState(0);
-  const [desc, setDesc] = useState("");
-  const [date, setDate] = useState();
+  const [name, setName] = useState(props.name);
+  const [domain, setDomain] = useState(props.domain);
+  const [persons, setPersons] = useState(props.persons);
+  const [desc, setDesc] = useState(props.desc);
+  const [date, setDate] = useState(props.date);
   const addSkill = () => {
     let skill = document.getElementById("getReqSkill").value;
     skillSet = [...skillSet, skill];
@@ -35,7 +35,7 @@ function CollabPostForm() {
     isLoading(true);
     let [x, y, z] = date.split("-");
     const res = [z, y, x].join("-");
-    aym?visibility=0 :visibility=1
+    aym ? (visibility = 0) : (visibility = 1);
     const docData = {
       name: name,
       uid: user?.uid,
@@ -45,15 +45,15 @@ function CollabPostForm() {
       skills: skillSet,
       date: res,
       time: serverTimestamp(),
-      visibility:visibility
+      visibility: visibility,
     };
     try {
-      await addDoc(collection(db, "collab"), docData);
+      await updateDoc(doc(db, "collab",props.postid), docData);
     } catch (err) {
       console.log(err);
     }
     isLoading(false);
-    toast.success("Collab Request Posted !");
+    toast.success("Post Updated !");
   };
 
   useEffect(() => {
@@ -181,7 +181,12 @@ function CollabPostForm() {
             onChange={(e) => setDesc(e.target.value)}
           />
         </Form.Group>
-        <Form.Check  type="switch" id="custom-switch" label="Ghost Mode"  onClick={()=>setAym(!aym)}/>
+        <Form.Check
+          type="switch"
+          id="custom-switch"
+          label="Ghost Mode"
+          onClick={() => setAym(!aym)}
+        />
       </Form>
       <Modal.Footer>
         {loading ? (
@@ -204,4 +209,4 @@ function CollabPostForm() {
   );
 }
 
-export default CollabPostForm;
+export default EditPost;

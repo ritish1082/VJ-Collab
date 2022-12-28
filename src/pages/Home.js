@@ -1,19 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
+// import "./Home.css";
 function Home() {
   return (
-    <div className="homee">
+    <div className="">
       <div className=" w-75 mx-auto">
-        <h1
-          style={{
-            fontFamily: "shalimar",
-            fontSize: "100px",
-            textAlign: "center",
-            marginTop: "0px",
-          }}
-        >
-          <b>Welcome to VJ Collab..</b>
-        </h1>
+        <div className="">
+          <h1
+            style={{
+              fontFamily: "shalimar",
+              fontSize: "80px",
+              textAlign: "center",
+              marginTop: "1px",
+              
+            }}
+          >
+            <b className="">Welcome to VJ Collab..</b>
+          </h1>
+
+
+        </div>
+        
         <hr className="w-50 mx-auto"></hr>
         <br></br>
         <div fluid="md" className="container">
